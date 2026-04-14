@@ -13,9 +13,8 @@ def test_limited_api_tag():
     # Mocking minimum to be 3.8 (0x03080000)
     options = {"options": {"py_limited_api": True, "define_macros": [["Py_LIMITED_API", "0x03080000"]]}}
 
-    with patch("hatch_cython.plugin.sys_tags") as mock_tags:
-        mock_tag = SimpleNamespace(platform="win_amd64")
-        mock_tags.return_value = iter([mock_tag])
+    with patch("hatch_cython.plugin.platform_tags") as mock_tags:
+        mock_tags.return_value = iter(["win_amd64"])
 
         root = Path(getcwd())
         hook = CythonBuildHook(
@@ -34,9 +33,8 @@ def test_limited_api_tag():
 def test_limited_api_tag_no_macro():
     options = {"options": {"py_limited_api": True}}
 
-    with patch("hatch_cython.plugin.sys_tags") as mock_tags:
-        mock_tag = SimpleNamespace(platform="win_amd64")
-        mock_tags.return_value = iter([mock_tag])
+    with patch("hatch_cython.plugin.platform_tags") as mock_tags:
+        mock_tags.return_value = iter(["win_amd64"])
 
         root = Path(getcwd())
         hook = CythonBuildHook(
@@ -74,9 +72,8 @@ def test_initialize_with_limited_api():
     options = {"options": {"py_limited_api": True, "define_macros": [["Py_LIMITED_API", "0x03090000"]]}}
 
     with arch_platform("x86_64", "linux"):
-        with patch("hatch_cython.plugin.sys_tags") as mock_tags:
-            mock_tag = SimpleNamespace(platform="linux_x86_64")
-            mock_tags.return_value = iter([mock_tag])
+        with patch("hatch_cython.plugin.platform_tags") as mock_tags:
+            mock_tags.return_value = iter(["linux_x86_64"])
 
             root = Path(getcwd())
             hook = CythonBuildHook(

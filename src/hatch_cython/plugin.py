@@ -9,7 +9,7 @@ from tempfile import TemporaryDirectory
 
 from Cython.Tempita import sub as render_template
 from hatchling.builders.hooks.plugin.interface import BuildHookInterface
-from packaging.tags import sys_tags
+from packaging.tags import platform_tags
 
 from hatch_cython.config import parse_from_dict
 from hatch_cython.constants import (
@@ -378,6 +378,6 @@ class CythonBuildHook(BuildHookInterface):
         if minimum is None:
             minimum = (sys.version_info.major, sys.version_info.minor)
 
-        platform = next(sys_tags()).platform
+        platform = next(platform_tags())
         major, minor = minimum
         return f"cp{major}{minor}-abi3-{platform}"
